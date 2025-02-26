@@ -33,11 +33,14 @@ exports.put = async (req, res, next) => {
     res.status(201).send('ok');
 }
 
-exports.delete = (req, res, next) => {
+exports.delete = async (req, res, next) => {
     let id = req.params.id;
-    res.status(200)('rota delete ' + id);
+    const con = await connect();
+    const sql = 'DELETE from usuario WHERE idusuario = ?';
+    const values = [id];
+    await con.query(sql, values);
+    res.status(201).send('ok');
 }
-
 exports.get = async (req, res, next) => {
     const con = await connect();
     const [rows] = await con.query('SELECT * FROM usuario');
@@ -45,6 +48,15 @@ exports.get = async (req, res, next) => {
 }
 
 exports.getById = async (req, res, next) => {
-    let id = req.params.id;
-    res.status(200).send('rota get com id ' + id);
+    try{
+        let id = req.params.id;
+        const con = await connect();
+        const [rows] = await con.query('SELECT * FROM usuario WHERE idusuario =?', [id]);
+        if (rows.length == 0) {
+            return res.status(404).send({error: 'Usuario não encontrado'});
+        }
+        res.status(200).send(rows[0]);
+    } catch (error){
+        res.status(500).send({error: 'Erro interno no servidor'});
+    }
 }
