@@ -1,0 +1,19 @@
+{
+    "nome": "Lucas Rafael",
+    "telefone": "35992763405",
+    "email": "lucas.rafael@gmail.com",
+    "endereco": {
+        "Rua": "Desembargador Jorge Fontana",
+        "Número": "622",
+        "Bairro": "São Judas Tadeu",
+        "Cidade": "São Sebastião do Paraíso",
+        "UF": "MG",
+        "CEP": "37950-152"
+    },
+    "Filmes preferidos": [
+        "Batman, o cavaleiro das trevas",
+        "Green Book",
+        "Harry Potter",
+        "Senhor dos Anéis"
+    ]
+}
