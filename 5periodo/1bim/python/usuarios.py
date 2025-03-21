@@ -1,11 +1,12 @@
 import pymysql
-from server import app
 from db_config import connect_db
 from flask import jsonify
-from flask import flash, request
+from flask import flash, request, Blueprint
 
-@app.route('/usuarios')
-def usuarios():
+usuario_bp = Blueprint("usuario", __name__)
+
+@usuario_bp.route('/usuarios')
+def usuario():
     try:
         conn = connect_db()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
@@ -20,5 +21,39 @@ def usuarios():
         cursor.close()
         conn.close()
 
-if __name__ == "__main__":
-    app.run()
+
+@usuario_bp.route('/usuario/<id>')
+def usuariobyid(id):
+    try:
+        conn = connect_db()
+        cur = conn.cursor(pymysql.cursors.DictCursor)
+        cur.execute("SELECT * FROM usuario WHERE idusuario = %s""", (id))
+        rows = cur.fetchall()
+        resp = jsonify(rows[0])
+        resp.status_code = 200
+        return resp
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@usuario_bp.route('/usuario', methods=['POST'])
+def usuarionovo(id):
+    try:
+        conn = connect_db()
+        cur = conn.cursor(pymysql.cursors.DictCursor)
+        #pegar dados json
+        usuario = request.json
+        nome = usuario['nome']
+        email = usuario['email']
+        senha = usuario['senha']
+        telefone = usuario['telefone']
+        cur.execute("INSERT INTO usuario (nome, email, senha, telefone) VALUES (%s, %s, %s, %s)", 
+                    (nome, email, senha, telefone))
+        conn.commit()
+        resp = jsonify({'message': 'Usuário cadastrado com sucesso'})
+        resp.status_code = 200
+        return resp
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+        
+
