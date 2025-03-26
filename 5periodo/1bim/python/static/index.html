@@ -1,11 +1,146 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <title>Gerenciar Usuários</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    Olá Mundo
+<body class="bg-light">
+  <div class="container py-5">
+    <h1 class="mb-4">Usuários</h1>
+
+    <div class="mb-4">
+      <h4>Cadastrar Novo Usuário</h4>
+      <form id="userForm">
+        <div class="row g-2">
+          <div class="col-md-3"><input type="text" class="form-control" placeholder="Nome" id="nome" required></div>
+          <div class="col-md-3"><input type="email" class="form-control" placeholder="Email" id="email" required></div>
+          <div class="col-md-2"><input type="password" class="form-control" placeholder="Senha" id="senha" required></div>
+          <div class="col-md-2"><input type="text" class="form-control" placeholder="Telefone" id="telefone" required></div>
+          <div class="col-md-2 d-grid"><button type="submit" class="btn btn-primary">Cadastrar</button></div>
+        </div>
+      </form>
+    </div>
+
+    <h4 class="mb-3">Lista de Usuários</h4>
+    <table class="table table-bordered table-striped" id="usuariosTable">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Telefone</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    const apiUrl = 'http://localhost:5000';
+
+    async function carregarUsuarios() {
+      const response = await fetch(`${apiUrl}/usuarios`);
+      const usuarios = await response.json();
+
+      const tbody = document.querySelector("#usuariosTable tbody");
+      tbody.innerHTML = "";
+
+      usuarios.forEach(usuario => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${usuario.idusuario}</td>
+          <td>${usuario.nome}</td>
+          <td>${usuario.email}</td>
+          <td>${usuario.telefone}</td>
+          <td>
+            <button class="btn btn-sm btn-warning" onclick="editarUsuario(${usuario.idusuario})">Editar</button>
+            <button class="btn btn-sm btn-danger" onclick="deletarUsuario(${usuario.idusuario})">Excluir</button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    document.getElementById("userForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const data = {
+        nome: document.getElementById("nome").value,
+        email: document.getElementById("email").value,
+        senha: document.getElementById("senha").value,
+        telefone: document.getElementById("telefone").value
+      };
+
+      await fetch(`${apiUrl}/usuario`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+      });
+
+      this.reset();
+      carregarUsuarios();
+    });
+
+    async function deletarUsuario(id) {
+      if (confirm("Tem certeza que deseja excluir este usuário?")) {
+        await fetch(`${apiUrl}/usuario/${id}`, { method: "DELETE" });
+        carregarUsuarios();
+      }
+    }
+
+    async function editarUsuario(id) {
+      const response = await fetch(`${apiUrl}/usuario/${id}`);
+      const usuario = await response.json();
+
+      document.getElementById("nome").value = usuario.nome;
+      document.getElementById("email").value = usuario.email;
+      document.getElementById("senha").value = usuario.senha;
+      document.getElementById("telefone").value = usuario.telefone;
+
+      document.getElementById("userForm").removeEventListener("submit", cadastrarHandler);
+      document.getElementById("userForm").addEventListener("submit", async function atualizarHandler(e) {
+        e.preventDefault();
+        const data = {
+          nome: document.getElementById("nome").value,
+          email: document.getElementById("email").value,
+          senha: document.getElementById("senha").value,
+          telefone: document.getElementById("telefone").value
+        };
+
+        await fetch(`${apiUrl}/usuario/${id}`, {
+          method: "PUT",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify(data)
+        });
+
+        this.reset();
+        this.removeEventListener("submit", atualizarHandler);
+        this.addEventListener("submit", cadastrarHandler);
+        carregarUsuarios();
+      }, { once: true });
+    }
+
+    async function cadastrarHandler(e) {
+      e.preventDefault();
+      const data = {
+        nome: document.getElementById("nome").value,
+        email: document.getElementById("email").value,
+        senha: document.getElementById("senha").value,
+        telefone: document.getElementById("telefone").value
+      };
+
+      await fetch(`${apiUrl}/usuario`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+      });
+
+      this.reset();
+      carregarUsuarios();
+    }
+
+    window.onload = carregarUsuarios;
+  </script>
 </body>
 </html>

@@ -67,7 +67,7 @@ def usuarioatualiza(id):
         email = usuario['email']
         senha = usuario['senha']
         telefone = usuario['telefone']
-        cur.execute("UPDATE usuario SET nome=?, email=?, senha=?, telefone=? WHERE idusuario=?", 
+        cur.execute("UPDATE usuario SET nome=%s, email=%s, senha=%s, telefone=%s WHERE idusuario=%s", 
                     (nome, email, senha, telefone, id))
         conn.commit()
         resp = jsonify({'message': 'Usuário atualizado com sucesso'})
