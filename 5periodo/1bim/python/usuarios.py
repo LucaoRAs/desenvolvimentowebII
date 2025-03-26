@@ -55,5 +55,36 @@ def usuarionovo(id):
         return resp
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-        
+    
+@usuario_bp.route('/usuario/<id>', methods=['PUT'])
+def usuarioatualiza(id):
+    try:
+        conn = connect_db()
+        cur = conn.cursor(pymysql.cursors.DictCursor)
+        #pegar dados json
+        usuario = request.json
+        nome = usuario['nome']
+        email = usuario['email']
+        senha = usuario['senha']
+        telefone = usuario['telefone']
+        cur.execute("UPDATE usuario SET nome=?, email=?, senha=?, telefone=? WHERE idusuario=?", 
+                    (nome, email, senha, telefone, id))
+        conn.commit()
+        resp = jsonify({'message': 'Usuário atualizado com sucesso'})
+        resp.status_code = 200
+        return resp
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
+@usuario_bp.route('/usuario/<id>', methods=['DELETE'])
+def usuariodeleta(id):
+    try:
+        conn = connect_db()
+        cur = conn.cursor(pymysql.cursors.DictCursor)
+        cur.execute("DELETE FROM usuario WHERE idusuario=?", (id))
+        conn.commit()
+        resp = jsonify({'message': 'Usuário deletado com sucesso'})
+        resp.status_code = 200
+        return resp
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
