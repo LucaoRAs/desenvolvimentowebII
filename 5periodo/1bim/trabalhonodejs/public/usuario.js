@@ -90,15 +90,20 @@ function mostrar(dados) {
   const lista = document.getElementById("lista");
   lista.innerHTML = "";
   for (let i in dados) {
+    const precoFormatado = Number(dados[i].preco).toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    });
+
     lista.innerHTML += "<tr>"
       + "<td>" + dados[i].id + "</td>"
       + "<td>" + dados[i].modelo + "</td>"
       + "<td>" + dados[i].marca + "</td>"
       + "<td>" + dados[i].ano + "</td>"
       + "<td>" + dados[i].cor + "</td>"
-      + "<td>" + dados[i].preco + "</td>"
+      + "<td>" + precoFormatado + "</td>"
       + "<td>" 
-      + "<button type='button' class='btn btn-primary btn-sm' onclick='alterar(" + dados[i].idu + ")'>Alterar</button> "
+      + "<button type='button' class='btn btn-primary btn-sm' onclick='alterar(" + dados[i].id + ")'>Alterar</button> "
       + "<button type='button' class='btn btn-secondary btn-sm' onclick='excluir(" + dados[i].id + ")'>Excluir</button>"
       + "</td>"
       + "</tr>";

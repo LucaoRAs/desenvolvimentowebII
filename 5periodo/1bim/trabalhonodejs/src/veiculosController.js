@@ -1,5 +1,5 @@
 async function connect() {
-    if (global.connection && global.connection.state != 'discconnect') {
+    if (global.connection && global.connection.state != 'disconnected') {
         return global.connection;
     }
 
@@ -28,7 +28,7 @@ exports.put = async (req, res, next) => {
     let id = req.params.id;
     const con = await connect();
     const sql = 'UPDATE veiculos SET modelo =?, marca =?, ano =?, cor =?, preco=? WHERE id = ?';
-    const values = [req.body.nome, req.body.telefone, req.body.email, req.body.senha, id];
+    const values = [req.body.modelo, req.body.marca, req.body.ano, req.body.cor, req.body.preco, id];
     await con.query(sql, values);
     res.status(201).send('ok');
 }
