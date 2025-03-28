@@ -1,3 +1,142 @@
-h1{
-    
-}
+body {
+    background-color: #ffffff;
+    color: #000000;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  h1 {
+    color: #c8102e;
+    text-align: center;
+    font-size: 50px;
+    font-weight: bolder;
+    text-shadow: none;
+  }
+  
+  .text-flamengo {
+    color: #c8102e;
+  }
+  
+  .btn-success {
+    background-color: #c8102e;
+    border-color: #c8102e;
+    color: #fff;
+  }
+  
+  .btn-success:hover {
+    background-color: #a00d23;
+    border-color: #a00d23;
+  }
+  
+  .btn-secondary {
+    background-color: #c8102e;
+    border-color: #c8102e;
+    color: #fff;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #a00d23;
+    border-color: #a00d23;
+  }
+  
+  .table thead {
+    background-color: #000;
+    color: #fff;
+  }
+  
+  .table-bordered th,
+  .table-bordered td {
+    border-color: #c8102e;
+  }
+  
+  .table tbody tr {
+    background-color: #f8f9fa;
+    color: #000000;
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: #eaeaea;
+    cursor: pointer;
+  }
+  
+  .modal-header {
+    background-color: #c8102e !important;
+    color: #fff !important;
+    border-bottom: 1px solid #a00d23;
+  }
+  
+  
+  .modal-content {
+    background-color: #ffffff;
+    color: #000000;
+    border: 2px solid #c8102e;
+    border-radius: 0.5rem;
+  }
+  
+  .form-control {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #ccc;
+  }
+  
+  .form-control:focus {
+    border-color: #c8102e;
+    background-color: #ffffff;
+    color: #000000;
+    box-shadow: 0 0 0 0.2rem rgba(200, 16, 46, 0.25);
+  }
+  
+  .btn-primary {
+    background-color: #000;
+    border-color: #000;
+    color: #fff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #222;
+    border-color: #222;
+  }
+  
+  .icon-btn {
+    border: none;
+    background: transparent;
+    font-size: 1.2rem;
+    color: #000;
+  }
+  
+  .icon-btn.edit {
+    color: #0000 !important;
+  }
+  
+  .icon-btn.delete {
+    color: #c8102e;
+  }
+  
+  .icon-btn:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
+    transition: all 0.2s;
+  }
+  
+  .btn-editar {
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #000;
+  }
+  
+  .btn-editar:hover {
+    background-color: #000;
+    color: #c8102e;
+    border-color: #c8102e;
+  }
+  
+  .btn-excluir {
+    background-color: #c8102e;
+    color: #fff;
+    border: 1px solid #c8102e;
+  }
+  
+  .btn-excluir:hover {
+    background-color: #c8102e;
+    border-color: #000;
+  }
+  
