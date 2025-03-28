@@ -1,5 +1,5 @@
 from flask import Flask, send_from_directory
-from usuarios import veiculos_bp
+from veiculos import veiculos_bp
 import os
 
 app = Flask(__name__, static_url_path='', static_folder='static')
