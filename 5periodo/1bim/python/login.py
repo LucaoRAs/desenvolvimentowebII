@@ -6,7 +6,7 @@ from flask import flash, request, Blueprint
 login_bp = Blueprint("login", __name__)
 
 @login_bp.route('/login', methods=['POST'])
-def usuarionovo(id):
+def login():
     try:
         usuario = request.json
         email = usuario['email']
@@ -21,12 +21,13 @@ def usuarionovo(id):
             resp = {}
             resp.status_code = 401
         else:
-            resp = {"sucess": True}
+            resp = {"sucess": False}
             resp.status_code = 200
 
-        conn.commit()
-        resp = jsonify({'message': 'Usuário cadastrado com sucesso'})
-        resp.status_code = 200
-        return resp
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        print(e)
+    
+    finally:
+        cur.close()
+        conn.close()
+
