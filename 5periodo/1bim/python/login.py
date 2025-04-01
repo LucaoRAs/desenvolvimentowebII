@@ -18,11 +18,10 @@ def login():
         cur.execute("SELECT * FROM usuario WHERE email = %s AND senha = %s", (email, senha))
         rows = cur.fetchall()
         if len(rows) == 0:
-            resp = {}
-            resp.status_code = 401
+            resp = {"sucess": False}, 401
         else:
-            resp = {"sucess": False}
-            resp.status_code = 200
+            resp = {"sucess": False}, 200
+        return resp
 
     except Exception as e:
         print(e)
