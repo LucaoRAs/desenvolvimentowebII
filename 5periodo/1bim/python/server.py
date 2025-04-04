@@ -15,7 +15,7 @@ app.config['SECRET_KEY'] = "MINHA CHAVE SECRETA JWT"
 
 @app.route('/')
 def home():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'index.html')
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'usuario.html')
 
 if __name__ == '__main__':
     app.run()
