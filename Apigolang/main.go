@@ -3,10 +3,11 @@ package main
 import (
 	"log"
 	"net/http"
-	"Apigolang/routers"
+	"apigolang/routers"
 )
-func main()	{
+
+func main() {
 	router := routers.SetupRouter()
-	log.Println("Server is running on port 8080")
-	log.Fatal(http.ListenAndServe(":8080", router))
+	log.Println("Iniciando servidor em 8080")
+	log.Fatal((http.ListenAndServe(":8080", router)))
 }

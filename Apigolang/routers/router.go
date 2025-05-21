@@ -1,18 +1,19 @@
 package routers
 
 import (
-    "Apigolang/controllers"
-    "github.com/gorilla/mux"
-    "net/http"
+	"apigolang/controllers"
+	"net/http"
+	"github.com/gorilla/mux"
 )
 
-// SetupRouter inicializa o roteador e define as rotas.
 func SetupRouter() *mux.Router {
-    router := mux.NewRouter()
-    router.HandleFunc("/usuarios", controllers.GetUsuarios).Methods("POST")   
+	router := mux.NewRouter()
+	router.HandleFunc("/usuarios", controllers.GetUsuarios).Methods("GET")
+	router.HandleFunc("/usuarios", controllers.CreateUsuario).Methods("POST")
 
-    router.PathPrefix("/").Handler(
-        http.StripPrefix("/", http.FileServer(http.Dir("./static/"))),
-    )
-    return router
+	router.PathPrefix("/").Handler(http.StripPrefix("/",http.FileServer(http.Dir("./static/"))))
+
+
+
+	return router
 }

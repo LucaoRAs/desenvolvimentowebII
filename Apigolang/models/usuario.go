@@ -1,9 +1,11 @@
 package models
 
+// import "database/sql"
+
 type Usuario struct {
-	IDUSUARIO     int    `json:"idusuario"`
-	NOME    string `json:"nome"`
-	EMAIL   string `json:"email"`
-	SENHA    string `json:"senha"`
-	TELEFONE string `json:"telefone"`
+	Idusuario int `json:"idusuario"`
+	Nome *string `json: "nome"`
+	Email *string `json: "email"`
+	Senha *string `json:"senha"`
+	Telefone *string `json:"telefone"`
 }
