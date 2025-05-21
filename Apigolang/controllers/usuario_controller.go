@@ -48,7 +48,7 @@ func GetUsuarioById(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close() //executa no fim do método
 
-	row, erro := db.Query("SELECT idusuario, nome, email, senha, telefone FROM usuario WHERE idusuario=?" id)
+	row, erro := db.Query("SELECT idusuario, nome, email, senha, telefone FROM usuario WHERE idusuario=?", id)
 	if erro != nil {
 		http.Error(w, erro.Error(), http.StatusInternalServerError)
 		return
